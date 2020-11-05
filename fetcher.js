@@ -16,18 +16,17 @@ request(hostAddress, (error, response, body) => {
   // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   // console.log('body:', body); // Print the HTML for the Google homepage
   if (error) {
-    console.log ("URL is incorrect! and is resulting in an error");
+    console.log ("URL is incorrect and is resulting in an error");
     process.exit()
-  }
-  else {
+  } else {
     fs.writeFile(filePath, body, (err) => {
-      if (fs.readFile(filePath, (err) => {
+      if (fs.readFile(filePath, (err2) => {
         console.log("File already exists");
         rl.question("Type in Y and press enter to overwrite the file: ", (answer) => {
           output = `${answer}`;
           if (output === "Y") {
-            fs.writeFile(filePath, body, (err) => {
-              console.log(err); 
+            fs.writeFile(filePath, body, (err3) => {
+              console.log(err3); 
               let fileSize = fs.statSync(filePath);
               let fileSizeBytes = fileSize["size"];
               console.log("Downloaded and saved " +  fileSizeBytes + " bytes to " + filePath);
@@ -36,11 +35,12 @@ request(hostAddress, (error, response, body) => {
           console.log('Skipped! App is existing...')
           rl.close();
         })
-      })) console.log(err);
+      })) console.log(err2);
       
       let fileSize = fs.statSync(filePath);
       let fileSizeBytes = fileSize["size"];
       console.log("Downloaded and saved " +  fileSizeBytes + " bytes to " + filePath);
+      console.log(err); 
     });
   }
 
